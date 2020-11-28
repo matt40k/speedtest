@@ -1,0 +1,5 @@
+# Ignore app
+speedtest.exe
+speedtest.md
+# Ignore invalid CSVs (no ISP)
+*_.csv
