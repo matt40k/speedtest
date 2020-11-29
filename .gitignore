@@ -1,6 +1,7 @@
 # Ignore app
 speedtest.exe
 speedtest.md
+speedtest.zip
 # Ignore invalid CSVs (no ISP)
 *_.csv
 # Ignore test powershell script
