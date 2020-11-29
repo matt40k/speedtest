@@ -4,7 +4,8 @@ Set-Location $PSScriptRoot
 
 $SpeedtestBinary = ""
 
-if ($IsWindows) {
+if ($IsWindows -or (!$IsWindows -and !$IsMac -and !$IsLinux)) {
+    Write-Host "Running on Windows"
     # Download the speedtest cli (if we haven't already)
     if (!(Test-Path "speedtest.exe"))
     {
@@ -16,10 +17,13 @@ if ($IsWindows) {
     $SpeedtestBinary = "./speedtest.exe"
 
 } elseif ($IsMacOS) {
-    Write-Host "Running on a Mac"
+    Write-Host "Running on Mac"
     $SpeedtestBinary = "/usr/local/bin/speedtest"
 } elseif ($IsLinux) {
     Write-Host "Running on Linux"
+} else {
+    Write-Host "Running on unknown - aborting"
+    throw
 }
 
 if (!(Test-Path "isps.csv"))
@@ -30,7 +34,6 @@ $isps = Import-Csv -Path "./isps.csv"
 
 # Random sleep time
 $noOfSecs = (Get-Random -Minimum 3 -Maximum 851)
-$noOfSecs = 0
 Write-Host "Sleeping for $($noOfSecs) seconds"
 Start-Sleep -Seconds $noOfSecs
 
