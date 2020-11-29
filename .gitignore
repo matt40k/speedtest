@@ -3,3 +3,5 @@ speedtest.exe
 speedtest.md
 # Ignore invalid CSVs (no ISP)
 *_.csv
+# Ignore test powershell script
+test.ps1
