@@ -4,7 +4,12 @@ Set-Location $PSScriptRoot
 
 $SpeedtestBinary = ""
 
-if ($IsWindows -or (!$IsWindows -and !$IsMac -and !$IsLinux)) {
+if ($IsMacOS) {
+    Write-Host "Running on Mac"
+    $SpeedtestBinary = "/usr/local/bin/speedtest"
+} elseif ($IsLinux) {
+    Write-Host "Running on Linux"
+} else {
     Write-Host "Running on Windows"
     # Download the speedtest cli (if we haven't already)
     if (!(Test-Path "speedtest.exe"))
@@ -16,14 +21,6 @@ if ($IsWindows -or (!$IsWindows -and !$IsMac -and !$IsLinux)) {
     }
     $SpeedtestBinary = "./speedtest.exe"
 
-} elseif ($IsMacOS) {
-    Write-Host "Running on Mac"
-    $SpeedtestBinary = "/usr/local/bin/speedtest"
-} elseif ($IsLinux) {
-    Write-Host "Running on Linux"
-} else {
-    Write-Host "Running on unknown - aborting"
-    throw
 }
 
 if (!(Test-Path "isps.csv"))
@@ -103,7 +100,7 @@ if ($newIsp -eq 1)
     Add-Content -Path "isps.csv" -Value $myIsp
 }
 Write-Host "Commiting to Git"
-git add $csvFile
+git add "$csvFile"
 git add "isps.csv"
 git commit -m "Adding results"
 Write-Host "Pushing git changes to remote"
